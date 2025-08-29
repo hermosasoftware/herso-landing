@@ -12,9 +12,10 @@ const { pathname } = Astro.url;
 
 type Props = {
 	seo?: AstroSeoProps;
+	hideContact?: boolean;
 };
 
-const { seo: seoProp } = Astro.props;
+const { seo: seoProp, hideContact = false } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 
@@ -84,7 +85,7 @@ const isContactPage = /(?:^|\/)((it)\/)?contact\/?$/.test(pathname);
 		<Navigation />
 		{cursorFollowerActive() && <BlobCursorFollower />}
 		<slot />
-		{!isContactPage && <Contact />}
+	{!isContactPage && !hideContact && <Contact />}
 		<Footer />
 	</body>
 </html>
