@@ -21,3 +21,6 @@ pnpm-debug.log*
 .astro
 
 .unlighthouse
+
+# vercel output
+.vercel/

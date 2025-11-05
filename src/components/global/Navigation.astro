@@ -17,24 +17,17 @@ let pages = [
 	},
 	{
 		title: "About Us",
-		url: "/about",
+		url: "/#about-us",
 	},
 	{
 		title: "Projects",
-		url: "/blog/",
+		url: "/#projects",
 	},
 	{
 		title: t("contact"),
 		url: "/#contact",
 	},
 ];
-
-// if (isDev) {
-// 	pages.push({
-// 		title: "Overview",
-// 		url: "/system/overview",
-// 	});
-// }
 
 const { pathname } = Astro.url;
 ---
@@ -93,9 +86,8 @@ const { pathname } = Astro.url;
 													href={translatePath(page.url)}
 													class={`inline-block cursor-pointer px-1 py-[0.33rem] ${
 														page.url === pathname ||
-														page.url === pathname.replace(/^\/it|\/$/, "") ||
-														(page.url === "/blog" && (pathname.startsWith("/blog") || pathname.startsWith("/it/blog"))) ||
-														(page.url === "/about" && (pathname.startsWith("/about") || pathname.startsWith("/it/about")))
+														page.url === pathname + "/" ||
+														(page.url === "/" && (pathname === "" || pathname === "/" || pathname === "/it" || pathname === "/it/"))
 															? "active"
 															: ""
 													}`}
@@ -110,16 +102,6 @@ const { pathname } = Astro.url;
 										);
 									})
 								}
-							<!-- <li>
-								<a href={translatePath(path, `${lang === "it" ? "en" : "it"}`)} class="inline-block cursor-pointer px-1 py-[0.33rem]">
-									<span class="menu-item-container inline-block">
-										<span
-											class="menu-item px-4 py-1 font-semibold uppercase tracking-wide text-zinc-400 hover:text-white focus:text-white focus:shadow-none focus:outline-none">
-											{lang === "it" ? "en" : "it"}
-										</span>
-									</span>
-								</a>
-							</li> -->
 						</ul>
 					</nav>
 				</div>
@@ -257,7 +239,6 @@ const { pathname } = Astro.url;
 		transform: translateY(0);
 		transition: all 1.0s ease;
 	}
-	
 	nav ul li {
 		transition: all 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
@@ -377,7 +358,6 @@ const { pathname } = Astro.url;
 			navContainer?.classList.remove("collapsed");
 			document.querySelector("header .navigation")?.classList.remove("collapsed");
 			menuCollapsed = false;
-			
 			if (pageLinksUl) {
 				gsap.set(pageLinksUl.children, { 
 					opacity: 1, 
@@ -451,7 +431,9 @@ const { pathname } = Astro.url;
 		var navProjects = document.getElementById("nav-projects-link");
 		if (navProjects) {
 			navProjects.addEventListener("click", function (e) {
-				if (window.location.pathname === "/" || window.location.pathname === "/it/") {
+				const isHomePage = window.location.pathname === "/" || window.location.pathname === "/it/" || 
+				window.location.pathname === "/it" || window.location.pathname === "";
+				if (isHomePage) {
 					e.preventDefault();
 					gsap.to(window, { duration: 0.5, scrollTo: "#projects" });
 				}
@@ -460,7 +442,9 @@ const { pathname } = Astro.url;
 		var navContact = document.getElementById("nav-contact-link");
 		if (navContact) {
 			navContact.addEventListener("click", function (e) {
-				if (window.location.pathname === "/" || window.location.pathname === "/it/") {
+				const isHomePage = window.location.pathname === "/" || window.location.pathname === "/it/" ||
+				window.location.pathname === "/it" || window.location.pathname === "";
+				if (isHomePage) {
 					e.preventDefault();
 					gsap.to(window, { duration: 0.5, scrollTo: "#contact" });
 				}
@@ -469,7 +453,9 @@ const { pathname } = Astro.url;
 		var navAbout = document.getElementById("nav-about-link");
 		if (navAbout) {
 			navAbout.addEventListener("click", function (e) {
-				if (window.location.pathname === "/" || window.location.pathname === "/it/") {
+				const isHomePage = window.location.pathname === "/" || window.location.pathname === "/it/" ||
+				window.location.pathname === "/it" || window.location.pathname === "";
+				if (isHomePage) {
 					e.preventDefault();
 					gsap.to(window, { duration: 0.5, scrollTo: "#about-us" });
 				}
